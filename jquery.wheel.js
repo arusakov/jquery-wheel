@@ -1,4 +1,4 @@
-(function ($, window, document, undefined) {
+(function ($, document, undefined) {
     
     var jEvent = $.event,
         addEvent,
@@ -100,4 +100,4 @@
             $.removeEvent(this, eventName, handler);
         }
     };
-})(jQuery, window, document);
+})(jQuery, document);
