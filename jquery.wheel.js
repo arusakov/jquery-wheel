@@ -1,6 +1,5 @@
 (function ($, window, document, undefined) {
-    var
-        jEvent = $.event,
+    var jEvent = $.event,
         addEvent,
         eventName,
         handler,
@@ -50,6 +49,7 @@
     function handler(e) {
         var eventOrigin = e || window.event,
             evt = jEvent.fix(eventOrigin);
+        
         $.extend(evt, normalizeEvent(eventOrigin));
         evt.type = 'wheel';
 
