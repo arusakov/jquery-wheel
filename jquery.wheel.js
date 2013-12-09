@@ -50,12 +50,10 @@
                 event.deltaZ = 0;
 
                 if (eventOrigin.axis === eventOrigin.VERTICAL_AXIS) {
-                    // vertical
-                    event.deltaY = e.detail;
+                    event.deltaY = eventOrigin.detail;
                     event.deltaX = 0;
                 } else if (eventOrigin.axis === eventOrigin.HORIZONTAL_AXIS) {
-                    // horizontal
-                    event.deltaX = e.detail;
+                    event.deltaX = eventOrigin.detail;
                     event.deltaY = 0;
                 }
             };
@@ -64,7 +62,7 @@
             normalizeEvent = function (event, eventOrigin) {
                 event.deltaMode = 0;
                 event.deltaX = 0;
-                event.deltaY = e.detail;
+                event.deltaY = eventOrigin.detail;
                 event.deltaZ = 0;
             }
         }
