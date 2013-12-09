@@ -24,12 +24,13 @@
             // for older IE
             return {
                 deltaX: 0,
-                deltaY: -e.wheelDelta
+                deltaY: -e.wheelDelta,
                 deltaZ: 0,
                 deltaMode: 0
             };
         };
     } else {
+        var firefoxVersion = 
         // Firefox < 17 only
         eventName = 'DOMMouseScroll';
         normalizeEvent = function (e) {
