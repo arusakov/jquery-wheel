@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset='utf-8'/>
+	<title>wheel.jquery.js Test</title>
+	<style>
+	#cont {
+		border: 1px solid red;
+		overflow: scroll;
+
+		height: 100px;
+		width: 100px;
+		margin: 0 auto;
+	}
+	#cont span:nth-child(even) {
+		background: yellow;
+	}
+	#cont span:nth-child(odd) {
+		background: blue;
+	}
+	</style>
+</head>
+<body>
+	<div id="cont">
+		<span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span><span>Рас</span> <span>Два</span> <span>Три</span>
+	</div>
+	<!--<script type="text/javascript" src="jquery1.10.2.js"></script>-->
+	<script type="text/javascript" src="jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="wheel.jquery.js"></script>
+	<script type="text/javascript">
+	(function () {
+
+		// var click = function (e) {
+		// 	console.log(e);
+		// }			
+
+		// $(document.body).click(click);
+
+		// var xxx;
+
+
+		// $(document).bind('wheel', function (e) {
+
+		// 	e.preventDefault();
+		// 	console.log(e);
+		// });
+
+		// $('#cont').on('wheel', function (e) {
+		// 	e.preventDefault();
+		// 	console.log(e);
+		// });
+
+		$(document).click(function (e) {
+			console.log(e);
+		})
+
+	})();
+	</script>
+</body>
+</html>
