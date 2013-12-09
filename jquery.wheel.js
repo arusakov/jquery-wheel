@@ -69,11 +69,12 @@
             }
         }
     }
-
+    
     if (jEvent.fixHooks && jEvent.mouseHooks) {
         // fix event object as mouse event
         jEvent.fixHooks[eventName] = jEvent.mouseHooks;
     }
+
     function handler(e) {
         var eventOrigin = e || window.event,
             event = jEvent.fix(eventOrigin);
