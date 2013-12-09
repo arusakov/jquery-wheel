@@ -1,45 +1,72 @@
 (function ($, window, document, undefined) {
+    
     var jEvent = $.event,
         addEvent,
         eventName,
         handler,
         normalizeEvent;
+
     if (document.onwheel !== undefined || document.documentMode > 8) {
         eventName = 'wheel';
-        normalizeEvent = function (e) {
-            return e;
+        normalizeEvent = function (event, eventOrigin) {
+            event.deltaMode = eventOrigin.deltaMode;
+            event.deltaX = eventOrigin.deltaX;
+            event.deltaY = eventOrigin.deltaY;
+            event.deltaZ = eventOrigin.deltaZ;
         };
     } else if (document.onmousewheel !== undefined) {
         eventName = 'mousewheel';
-        normalizeEvent = function (e) {
-            if (e.wheelDeltaY !== undefined) {
+        normalizeEvent = function (event, eventOrigin) {
+            event.deltaMode = 0;
+            
+            if (eventOrigin.wheelDeltaY !== undefined) {
                 // for WebKit
-                return {
-                    deltaX: -e.wheelDeltaX,
-                    deltaY: -e.wheelDeltaY,
-                    deltaZ: -e.wheelDeltaZ,
-                    deltaMode: 0
-                };
+                event.deltaX = -e.wheelDeltaX;
+                event.deltaY = -e.wheelDeltaY;
+                event.deltaZ = -e.wheelDeltaZ;
+                return;
+            } else {
+                // for older IE
+                event.deltaX = 0;
+                event.deltaY = -e.wheelDelta;
+                event.deltaZ = 0;
             }
-            // for older IE
-            return {
-                deltaX: 0,
-                deltaY: -e.wheelDelta,
-                deltaZ: 0,
-                deltaMode: 0
-            };
         };
     } else {
-        var firefoxVersion = 
-        // Firefox < 17 only
-        eventName = 'DOMMouseScroll';
-        normalizeEvent = function (e) {
-            return {
-                deltaX: 0,
-                deltaY: e.detail,
-                detaZ: 0,
-                deltaMode: 0
+        // firefox zone
+
+        var firefoxString = navigator.userAgent.match(/firefox\/\d+\.?\d*/i),
+            firefoxVersion = 1;
+
+        if (firefoxString && firefoxString.length) {
+            firefoxVersion = +firefoxString[0].substr(8);
+        }
+
+
+        if (firefoxVersion > 3.5) {
+            eventName = 'MozMousePixelScroll';
+            normalizeEvent = function (event, eventOrigin) {
+                event.deltaMode = 0;
+                event.deltaZ = 0;
+
+                if (eventOrigin.axis === 2) {
+                    // vertical
+                    event.deltaY = e.detail;
+                    event.deltaX = 0;
+                } else if (e.axis === 1) {
+                    // horizontal
+                    event.deltaX = e.detail;
+                    event.deltaY = 0;
+                }
             };
+        } else {
+            eventName = 'DOMMouseScroll';
+            normalizeEvent = function (event, eventOrigin) {
+                event.deltaMode = 0;
+                event.deltaX = 0;
+                event.deltaY = e.detail;
+                event.deltaZ = 0;
+            }
         }
     }
 
@@ -49,12 +76,12 @@
     }
     function handler(e) {
         var eventOrigin = e || window.event,
-            evt = jEvent.fix(eventOrigin);
+            event = jEvent.fix(eventOrigin);
         
-        $.extend(evt, normalizeEvent(eventOrigin));
+        normalizeEvent(event, eventOrigin));
         evt.type = 'wheel';
 
-        return jEvent.dispatch.call(this, evt);
+        return jEvent.dispatch.call(this, event);
     }
 
     jEvent.special.wheel = {
