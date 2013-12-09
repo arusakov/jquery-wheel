@@ -49,11 +49,11 @@
                 event.deltaMode = 0;
                 event.deltaZ = 0;
 
-                if (eventOrigin.axis === 2) {
+                if (eventOrigin.axis === eventOrigin.VERTICAL_AXIS) {
                     // vertical
                     event.deltaY = e.detail;
                     event.deltaX = 0;
-                } else if (e.axis === 1) {
+                } else if (eventOrigin.axis === eventOrigin.HORIZONTAL_AXIS) {
                     // horizontal
                     event.deltaX = e.detail;
                     event.deltaY = 0;
