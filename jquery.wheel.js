@@ -78,8 +78,8 @@
         var eventOrigin = e || window.event,
             event = jEvent.fix(eventOrigin);
         
-        normalizeEvent(event, eventOrigin));
-        evt.type = 'wheel';
+        normalizeEvent(event, eventOrigin);
+        event.type = 'wheel';
 
         return jEvent.dispatch.call(this, event);
     }
