@@ -69,11 +69,9 @@
 		jEvent.fixHooks[eventName] = jEvent.mouseHooks;
 	}
 	
-	function handler(e) {
-		var eventOrigin = e || window.event,
-			event = jEvent.fix( eventOrigin );
-		
-		normalizeEvent( event, eventOrigin );
+	function handler(origin) {
+		var event = jEvent.fix( origin );
+		normalizeEvent( event, origin );
 		event.type = "wheel";
 		return jEvent.dispatch.call( this, event );
 	}
