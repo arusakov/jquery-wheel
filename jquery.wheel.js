@@ -6,7 +6,7 @@
 		normalizeEvent;
 
 	if ( document.onwheel !== undefined || document.documentMode > 8 ) {
-		eventName = 'wheel';
+		eventName = "wheel";
 		normalizeEvent = function (event, eventOrigin) {
 			event.deltaMode = eventOrigin.deltaMode;
 			event.deltaX = eventOrigin.deltaX;
@@ -14,7 +14,7 @@
 			event.deltaZ = eventOrigin.deltaZ;
 		};
 	} else if ( document.onmousewheel !== undefined ) {
-		eventName = 'mousewheel';
+		eventName = "mousewheel";
 		normalizeEvent = function (event, eventOrigin) {
 			event.deltaMode = 0;
 
@@ -40,7 +40,7 @@
 		}
 		
 		if ( firefoxVersion > 3.5 ) {
-			eventName = 'MozMousePixelScroll';
+			eventName = "MozMousePixelScroll";
 			normalizeEvent = function (event, eventOrigin) {
 				event.deltaMode = 0;
 				event.deltaZ = 0;
@@ -54,7 +54,7 @@
 				}
 			};
 		} else {
-			eventName = 'DOMMouseScroll';
+			eventName = "DOMMouseScroll";
 			normalizeEvent = function ( event, eventOrigin) {
 				event.deltaMode = 0;
 				event.deltaX = 0;
@@ -74,18 +74,18 @@
 			event = jEvent.fix( eventOrigin );
 		
 		normalizeEvent( event, eventOrigin );
-		event.type = 'wheel';
+		event.type = "wheel";
 		return jEvent.dispatch.call( this, event );
 	}
 	
 	jEvent.special.wheel = {
-		version: '0.1',
+		version: "0.1",
 
 		setup: function () {
 			if ( this.addEventListener ) {
 				this.addEventListener( eventName, handler, false );
 			} else if ( this.atachEvent ) {
-				this.atachEvent( 'on' + eventName, handler );
+				this.atachEvent( "on" + eventName, handler );
 			}
 		},
 		
