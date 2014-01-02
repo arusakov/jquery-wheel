@@ -5,15 +5,16 @@
 		handler,
 		normalizeEvent;
 
-	if ( document.onwheel !== undefined || document.documentMode > 8 ) {
-		eventName = "wheel";
-		normalizeEvent = function (event, eventOrigin) {
-			event.deltaMode = eventOrigin.deltaMode;
-			event.deltaX = eventOrigin.deltaX;
-			event.deltaY = eventOrigin.deltaY;
-			event.deltaZ = eventOrigin.deltaZ;
-		};
-	} else if ( document.onmousewheel !== undefined ) {
+	// if ( document.onwheel !== undefined || document.documentMode > 8 ) {
+	// 	eventName = "wheel";
+	// 	normalizeEvent = function (event, eventOrigin) {
+	// 		event.deltaMode = eventOrigin.deltaMode;
+	// 		event.deltaX = eventOrigin.deltaX;
+	// 		event.deltaY = eventOrigin.deltaY;
+	// 		event.deltaZ = eventOrigin.deltaZ;
+	// 	};
+	// } else 
+	if ( document.onmousewheel !== undefined ) {
 		eventName = "mousewheel";
 		normalizeEvent = function (event, eventOrigin) {
 			event.deltaMode = 0;
@@ -63,32 +64,23 @@
 			}
 		}
 	}
+
+	console.log(eventName);
 	
 	if ( jEvent.fixHooks && jEvent.mouseHooks ) {
-		// fix event object as mouse event
-		jEvent.fixHooks[eventName] = jEvent.mouseHooks;
+		jEvent.fixHooks[eventName] = {
+			props: jEvent.mouseHooks.props,
+			filter: function ( event, origin ) {
+				event.type = 'wheel';
+				return jEvent.mouseHooks.filter ? jEvent.mouseHooks.filter(event, origin) : event;
+			}
+		}	
 	}
 	
-	function handler(origin) {
-		var event = jEvent.fix( origin );
-		normalizeEvent( event, origin );
-		event.type = "wheel";
-		return jEvent.dispatch.call( this, event );
-	}
 	
 	jEvent.special.wheel = {
 		version: "0.1",
-
-		setup: function () {
-			if ( this.addEventListener ) {
-				this.addEventListener( eventName, handler, false );
-			} else if ( this.atachEvent ) {
-				this.atachEvent( "on" + eventName, handler );
-			}
-		},
-		
-		teardown: function () {
-			$.removeEvent( this, eventName, handler );
-		}
+		bindType: eventName,
+		delegateType: eventName		
 	};
 })( jQuery, document );
