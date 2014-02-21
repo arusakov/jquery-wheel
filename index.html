@@ -30,9 +30,17 @@
 	<script type="text/javascript">
 	(function () {
 
-		$('#cont').bind('wheel', function (e) {
-			console.log(e);
-			e.preventDefault();
+		$('#cont')
+			.on('wheel', function testWheel(e) {
+				console.log(1, e);
+				e.preventDefault();
+				e.stopPropagation();
+			})
+			.on('wheel', function testWheel2(e) {
+				console.log(3, e);
+			});
+		$('body').on('wheel', '', function testWheel1(e) {
+			console.log(2, e)
 		});
 	})();
 	</script>
