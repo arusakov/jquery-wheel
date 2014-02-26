@@ -61,13 +61,7 @@
 	}
 
 	if ( $.event.fixHooks && $.event.mouseHooks ) {
-		$.event.fixHooks[eventName] = {
-			props: $.event.mouseHooks.props,
-			filter: function ( event, origin ) {
-				normalizeEvent( event, origin );
-				return $.event.mouseHooks.filter(event, origin);
-			}
-		}	
+		$.event.fixHooks[ eventName ] = $.event.mouseHooks;
 	}
 	
 	$.event.special.wheel = {
@@ -78,6 +72,7 @@
 
 	$.event.special[ eventName ] = {
 		preDispatch: function ( event ) {
+			normalizeEvent( event, event.originalEvent );
 			event.type = "wheel";
 		}
 	};
