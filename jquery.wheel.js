@@ -10,7 +10,7 @@
 			event.deltaY = origin.deltaY;
 			event.deltaZ = origin.deltaZ;
 		};
-	} else 	if ( document.onmousewheel !== undefined ) {
+	} else if ( document.onmousewheel !== undefined ) {
 		eventName = "mousewheel";
 		normalizeEvent = function ( event, origin ) {
 			event.deltaMode = 0;
@@ -29,11 +29,7 @@
 	} else {
 		// firefox zone
 		var firefoxMatches = navigator.userAgent.match(/firefox\/(\d+\.?\d*)/i),
-			firefoxVersion = 1;
-		
-		if ( firefoxMatches ) {
-			firefoxVersion = +firefoxMatches[1];
-		}
+			firefoxVersion = firefoxMatches ? +firefoxMatches[1] : 1;
 		
 		if ( firefoxVersion > 3.5 ) {
 			eventName = "MozMousePixelScroll";
